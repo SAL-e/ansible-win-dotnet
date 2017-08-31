@@ -1,2 +1,29 @@
 ---
-# tasks file for ansible-win-dotnet
+
+- name: "Install Microsoft .NET Framework {{dotnet_version}}."
+  win_package:
+    path: "{{dotnet_source}}"
+    arguments: "/passive /norestart"
+    product_id: "{{dotnet_id}}"
+    expected_return_code: 0,1641,3010
+    register: dotnet_install_result
+  register: dotnet_exe
+  when: dotnet_uninstall is not defined or not dotnet_uninstall
+
+- win_reboot:
+  when: dotnet_install_result.reboot_required
+
+- debug:
+    var: dotnet_exe
+    verbosity: 1
+  when: dotnet_uninstall is not defined or not dotnet_uninstall
+
+- name: "Uninstall Microsoft .NET Framework {{dotnet_version}}."
+  raw: Start-Process "C:\Windows\System32\msiexec.exe" -ArgumentList "/x {{dotnet_id}} /qn" -Wait
+  register: dotnet_removed
+  when: dotnet_uninstall is defined and dotnet_uninstall
+
+- debug:
+    var: dotnet_removed
+    verbosity: 1
+  when: dotnet_uninstall is defined and dotnet_uninstall

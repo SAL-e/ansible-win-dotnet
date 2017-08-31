@@ -1,2 +1,7 @@
 ---
-# defaults file for ansible-win-dotnet
+
+dotnet_version: 4.6.2
+dotnet_source: https://download.microsoft.com/download/F/9/4/F942F07D-F26F-4F30-B4E3-EBD54FABA377/NDP462-KB3151800-x86-x64-AllOS-ENU.exe
+dotnet_id: {63DF5C4B-E3BF-3346-A033-C57B22F44C9E}
+#dotnet_exit_codes: 0,1641,3010
+dotnet_uninstall: false
