@@ -5,7 +5,7 @@
     path: "{{dotnet_source}}"
     arguments: "/passive /norestart"
     product_id: "{{dotnet_id}}"
-    expected_return_code: 0,1641,3010
+    expected_return_code: [0,1641,3010]
     register: dotnet_install_result
   register: dotnet_exe
   when: dotnet_uninstall is not defined or not dotnet_uninstall
